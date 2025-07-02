@@ -44,25 +44,77 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 
-from django.utils.text import slugify
-# Modèle Talent
 from django.db import models
+from django.utils import timezone
+from django.utils.text import slugify
 
-class Talent(models.Model):
+# Agent, représentant un agent d'artiste
+class Agent(models.Model):
     nom = models.CharField(max_length=150)
     prenom = models.CharField(max_length=150, blank=True)
+    email = models.EmailField(unique=True)
+    telephone = models.CharField(max_length=50, blank=True)
+    adresse = models.CharField(max_length=255, blank=True)
+    agence = models.CharField(max_length=255, blank=True)
+    site_web = models.URLField(blank=True)
+    linkedin = models.URLField(blank=True)
+    facebook = models.URLField(blank=True)
+    instagram = models.URLField(blank=True)
+    notes = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.prenom} {self.nom}" if self.prenom else self.nom
+
+# Contacts liés à un agent (pas au talent)
+class Contact(models.Model):
+    class ContactType(models.TextChoices):
+        EMAIL = "email", "Email"
+        TELEPHONE = "telephone", "Téléphone"
+        LINKEDIN = "linkedin", "LinkedIn"
+        TWITTER = "twitter", "Twitter"
+        FACEBOOK = "facebook", "Facebook"
+        INSTAGRAM = "instagram", "Instagram"
+        AUTRE = "autre", "Autre"
+
+    agent = models.ForeignKey(Agent, on_delete=models.CASCADE, related_name='contacts')
+    type_contact = models.CharField(max_length=20, choices=ContactType.choices)
+    valeur = models.CharField(max_length=255)
+    description = models.CharField(max_length=255, blank=True)
+
+    def __str__(self):
+        return f"{self.agent} - {self.get_type_contact_display()}: {self.valeur}"
+
+# Catégories de talents (ex : Comédien, Réalisateur)
+class CategorieTalent(models.Model):
+    nom = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.nom
+
+# Talent
+class Talent(models.Model):
+    SEXE_CHOICES = [
+        ('homme', 'Homme'),
+        ('femme', 'Femme'),
+        ('autre', 'Autre'),
+    ]
+
+    nom = models.CharField(max_length=150)
+    prenom = models.CharField(max_length=150, blank=True)
+    sexe = models.CharField(max_length=10, choices=SEXE_CHOICES, blank=True)
     date_naissance = models.DateField(null=True, blank=True)
     description = models.TextField(blank=True)
     photo_principale = models.ImageField(upload_to='talents/photos/', null=True, blank=True)
     taille = models.CharField(max_length=20, blank=True)
     poids = models.CharField(max_length=20, blank=True)
     permis = models.CharField(max_length=20, blank=True)
-
     slug = models.SlugField(unique=True, max_length=300, blank=True)
+    agent = models.ForeignKey(Agent, on_delete=models.SET_NULL, null=True, related_name='talents')
+
     localisations = models.ManyToManyField('Localisation', blank=True)
     langues = models.ManyToManyField('Langue', blank=True)
     competences = models.ManyToManyField('Competence', through='TalentCompetence', blank=True)
-
+    categories = models.ManyToManyField(CategorieTalent, blank=True, related_name='talents')
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -75,48 +127,72 @@ class Talent(models.Model):
                 n += 1
             self.slug = slug
         super().save(*args, **kwargs)
-   
 
+    def __str__(self):
+        return f"{self.prenom} {self.nom}" if self.prenom else self.nom
+
+# Galerie de photos pour un talent
+class Photo(models.Model):
+    talent = models.ForeignKey(Talent, on_delete=models.CASCADE, related_name='galerie_photos')
+    image = models.ImageField(upload_to='talents/galerie/')
+    description = models.CharField(max_length=255, blank=True)
+
+    def __str__(self):
+        return f"Photo de {self.talent}"
+
+# Localisation
 class Localisation(models.Model):
     nom = models.CharField(max_length=100)
 
     def __str__(self):
         return self.nom
 
+# Langue
 class Langue(models.Model):
     nom = models.CharField(max_length=100)
-    niveau = models.CharField(max_length=50, blank=True)  # ex: bilingue, notions
+    niveau = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
         return f"{self.nom} ({self.niveau})" if self.niveau else self.nom
 
+# Compétence
 class Competence(models.Model):
     nom = models.CharField(max_length=150)
-    categorie = models.CharField(max_length=100, blank=True)  # ex: danse, chant, instrument
+    categorie = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return self.nom
 
+# Relation Talent-Competence avec infos complémentaires
 class TalentCompetence(models.Model):
     talent = models.ForeignKey(Talent, on_delete=models.CASCADE)
     competence = models.ForeignKey(Competence, on_delete=models.CASCADE)
-    niveau = models.CharField(max_length=50, blank=True)  # ex: professionnel, débutant
+    niveau = models.CharField(max_length=50, blank=True)
     details = models.TextField(blank=True)
 
     class Meta:
         unique_together = ('talent', 'competence')
 
+# Type d'expérience (ex : Théâtre, Cinéma, Publicité)
+class TypeExperience(models.Model):
+    nom = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.nom
+
+# Expérience professionnelle d’un talent
 class Experience(models.Model):
     talent = models.ForeignKey(Talent, on_delete=models.CASCADE, related_name='experiences')
-    annee = models.CharField(max_length=20, blank=True)  # ex: 2023, 2022-2024
+    annee = models.CharField(max_length=20, blank=True)
     titre = models.CharField(max_length=250)
     description = models.TextField(blank=True)
     role = models.CharField(max_length=150, blank=True)
-    type_experience = models.CharField(max_length=100, blank=True)  # ex: film, publicité, théâtre
+    type_experience = models.ForeignKey(TypeExperience, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return f"{self.annee} - {self.titre}"
 
+# Attributs personnalisés d’un talent
 class TalentAttribut(models.Model):
     talent = models.ForeignKey(Talent, on_delete=models.CASCADE, related_name='attributs')
     cle = models.CharField(max_length=100)
@@ -125,6 +201,7 @@ class TalentAttribut(models.Model):
     class Meta:
         unique_together = ('talent', 'cle')
 
+# Médias liés au talent (photo, vidéo)
 class Media(models.Model):
     class MediaType(models.TextChoices):
         PHOTO = "photo", "Photo"
@@ -136,117 +213,4 @@ class Media(models.Model):
     description = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
-        return f"{self.talent.nom} - {self.media_type} - {self.id}"
-    
-class Contact(models.Model):
-    class ContactType(models.TextChoices):
-        EMAIL = "email", "Email"
-        TELEPHONE = "telephone", "Téléphone"
-        LINKEDIN = "linkedin", "LinkedIn"
-        TWITTER = "twitter", "Twitter"
-        FACEBOOK = "facebook", "Facebook"
-        INSTAGRAM = "instagram", "Instagram"
-        AUTRE = "autre", "Autre"
-
-    talent = models.ForeignKey(Talent, on_delete=models.CASCADE, related_name='contacts')
-    type_contact = models.CharField(max_length=20, choices=ContactType.choices)
-    valeur = models.CharField(max_length=255)
-    description = models.CharField(max_length=255, blank=True)  # optionnel, ex: "Pro perso", "Pro"
-
-    def __str__(self):
-        return f"{self.talent.nom} - {self.get_type_contact_display()}: {self.valeur}"
-    
-    
-    
-class Actualite(models.Model):
-    TITRE_MAX_LENGTH = 250
-    TYPE_CHOICES = [
-        ('actualite', 'Actualité Générale'),
-        ('interview', 'Interview'),
-        ('article', 'Article'),
-        ('communique', 'Communiqué de Presse'),
-    ]
-
-    titre = models.CharField(max_length= 250 ,verbose_name="Titre de l'actualité")
-    slug = models.SlugField(unique=True, max_length= 500, verbose_name="Slug (URL propre)", help_text="Un identifiant unique pour l'URL, généré à partir du titre.")
-    type_actualite = models.CharField(max_length=20, choices=TYPE_CHOICES, default='actualite', verbose_name="Type d'actualité")
-    contenu = models.TextField(verbose_name="Contenu de l'actualité")
-    date_publication = models.DateTimeField(default=timezone.now, verbose_name="Date de publication")
-    image_principale = models.ImageField(upload_to='actualites/images/', null=True, blank=True, verbose_name="Image principale")
-    talent_associe = models.ForeignKey('Talent', on_delete=models.SET_NULL, null=True, blank=True, related_name='actualites', verbose_name="Talent associé (optionnel)")
-    est_publie = models.BooleanField(default=True, verbose_name="Publiée sur le site")
-
-    class Meta:
-        verbose_name = "Actualité"
-        verbose_name_plural = "Actualités"
-        ordering = ['-date_publication'] # Ordonner les actualités par date de publication décroissante
-
-    def __str__(self):
-        return self.titre    
-    
-    
-class ProjetArtistique(models.Model):
-    STATUT_CHOICES = [
-        ('en_cours', 'En cours'),
-        ('termine', 'Terminé'),
-        ('pre_production', 'Pré-production'),
-        ('en_developpement', 'En développement'),
-        ('annule', 'Annulé'),
-    ]
-    TYPE_CHOICES = [
-        ('film', 'Film'),
-        ('serie', 'Série TV'),
-        ('theatre', 'Théâtre'),
-        ('publicite', 'Publicité'),
-        ('court_metrage', 'Court-métrage'),
-        ('web_serie', 'Web-série'),
-        ('autre', 'Autre'),
-    ]
-
-    titre = models.CharField(max_length=250, verbose_name="Titre du projet")
-    description = models.TextField(blank=True, verbose_name="Description du projet")
-    type_projet = models.CharField(max_length=50, choices=TYPE_CHOICES, default='autre', verbose_name="Type de projet")
-    statut = models.CharField(max_length=20, choices=STATUT_CHOICES, default='en_cours', verbose_name="Statut du projet")
-    date_debut = models.DateField(null=True, blank=True, verbose_name="Date de début")
-    date_fin_prevue = models.DateField(null=True, blank=True, verbose_name="Date de fin prévue")
-    date_fin_reelle = models.DateField(null=True, blank=True, verbose_name="Date de fin réelle")
-    image_principale = models.ImageField(upload_to='projets/images/', null=True, blank=True, verbose_name="Image du projet")
-    liens_externes = models.URLField(max_length=500, blank=True, verbose_name="Lien externe (ex: site officiel, bande-annonce)")
-    talents = models.ManyToManyField('Talent', related_name='projets_artistiques', blank=True, verbose_name="Talents impliqués")
-
-    class Meta:
-        verbose_name = "Projet Artistique"
-        verbose_name_plural = "Projets Artistiques"
-        ordering = ['-date_debut', 'titre']
-
-    def __str__(self):
-        return self.titre
-    
-    
-    
-class Evenement(models.Model):
-    TYPE_CHOICES = [
-        ('festival', 'Festival'),
-        ('ceremonie_prix', 'Cérémonie de Prix'),
-        ('projection', 'Projection Spéciale'),
-        ('autre', 'Autre Événement'),
-    ]
-
-    nom = models.CharField(max_length=250, verbose_name="Nom de l'événement")
-    type_evenement = models.CharField(max_length=20, choices=TYPE_CHOICES, default='autre', verbose_name="Type d'événement")
-    date_debut = models.DateField(verbose_name="Date de début")
-    date_fin = models.DateField(null=True, blank=True, verbose_name="Date de fin (si applicable)")
-    lieu = models.CharField(max_length=250, blank=True, verbose_name="Lieu de l'événement")
-    description = models.TextField(blank=True, verbose_name="Description de l'événement")
-    liens_externes = models.URLField(max_length=500, blank=True, verbose_name="Lien externe (ex: site officiel)")
-    talents_participants = models.ManyToManyField('Talent', related_name='evenements_participes', blank=True, verbose_name="Talents participants")
-    projets_associes = models.ManyToManyField('ProjetArtistique', related_name='evenements_associes', blank=True, verbose_name="Projets associés (ex: sélection officielle)")
-
-    class Meta:
-        verbose_name = "Événement"
-        verbose_name_plural = "Événements"
-        ordering = ['-date_debut']
-
-    def __str__(self):
-        return self.nom
-    
+        return f"{self.talent} - {self.media_type} - {self.id}"

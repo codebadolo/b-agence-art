@@ -75,33 +75,84 @@ class LogoutView(APIView):
             pass
         return Response({"detail": "Déconnexion réussie."}, status=status.HTTP_200_OK)
     
+from rest_framework import viewsets, filters
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from .models import (
+    Agent, Contact, CategorieTalent, Talent, Photo,
+    Localisation, Langue, Competence, TalentCompetence,
+    TypeExperience, Experience, TalentAttribut, Media
+)
+from .serializers import (
+    AgentSerializer, ContactSerializer, CategorieTalentSerializer, TalentSerializer, PhotoSerializer,
+    LocalisationSerializer, LangueSerializer, CompetenceSerializer, TalentCompetenceSerializer,
+    TypeExperienceSerializer, ExperienceSerializer, TalentAttributSerializer, MediaSerializer
+)
+
+class AgentViewSet(viewsets.ModelViewSet):
+    queryset = Agent.objects.all()
+    serializer_class = AgentSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['nom', 'prenom', 'email']
+
+class ContactViewSet(viewsets.ModelViewSet):
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+class CategorieTalentViewSet(viewsets.ModelViewSet):
+    queryset = CategorieTalent.objects.all()
+    serializer_class = CategorieTalentSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+class TalentViewSet(viewsets.ModelViewSet):
+    queryset = Talent.objects.all()
+    serializer_class = TalentSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['nom', 'prenom', 'slug', 'description']
+
+class PhotoViewSet(viewsets.ModelViewSet):
+    queryset = Photo.objects.all()
+    serializer_class = PhotoSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
 class LocalisationViewSet(viewsets.ModelViewSet):
     queryset = Localisation.objects.all()
     serializer_class = LocalisationSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 class LangueViewSet(viewsets.ModelViewSet):
     queryset = Langue.objects.all()
     serializer_class = LangueSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 class CompetenceViewSet(viewsets.ModelViewSet):
     queryset = Competence.objects.all()
-    serializer_class = CompetenceSerializer    
-class TalentViewSet(viewsets.ModelViewSet):
-    queryset = Talent.objects.all()
-    
-    serializer_class = TalentSerializer
-    lookup_field = 'slug'
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['localisations', 'langues', 'competences']
-    
-    def get_queryset(self):
-        qs = super().get_queryset()
-        # Ignore les filtres vides
-        for field in ['localisations', 'langues', 'competences']:
-            value = self.request.GET.get(field)
-            if value == "":
-                # Enlève le paramètre vide pour éviter l'erreur
-                self.request.GET._mutable = True
-                del self.request.GET[field]
-                self.request.GET._mutable = False
-        return qs
+    serializer_class = CompetenceSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+class TalentCompetenceViewSet(viewsets.ModelViewSet):
+    queryset = TalentCompetence.objects.all()
+    serializer_class = TalentCompetenceSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+class TypeExperienceViewSet(viewsets.ModelViewSet):
+    queryset = TypeExperience.objects.all()
+    serializer_class = TypeExperienceSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+class ExperienceViewSet(viewsets.ModelViewSet):
+    queryset = Experience.objects.all()
+    serializer_class = ExperienceSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+class TalentAttributViewSet(viewsets.ModelViewSet):
+    queryset = TalentAttribut.objects.all()
+    serializer_class = TalentAttributSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+class MediaViewSet(viewsets.ModelViewSet):
+    queryset = Media.objects.all()
+    serializer_class = MediaSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
