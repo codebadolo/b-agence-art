@@ -91,68 +91,69 @@ from .serializers import (
 class AgentViewSet(viewsets.ModelViewSet):
     queryset = Agent.objects.all()
     serializer_class = AgentSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter]
     search_fields = ['nom', 'prenom', 'email']
 
 class ContactViewSet(viewsets.ModelViewSet):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
 class CategorieTalentViewSet(viewsets.ModelViewSet):
     queryset = CategorieTalent.objects.all()
     serializer_class = CategorieTalentSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
 class TalentViewSet(viewsets.ModelViewSet):
     queryset = Talent.objects.all()
     serializer_class = TalentSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter]
+    lookup_field = 'slug'
     search_fields = ['nom', 'prenom', 'slug', 'description']
 
 class PhotoViewSet(viewsets.ModelViewSet):
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
 class LocalisationViewSet(viewsets.ModelViewSet):
     queryset = Localisation.objects.all()
     serializer_class = LocalisationSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
 class LangueViewSet(viewsets.ModelViewSet):
     queryset = Langue.objects.all()
     serializer_class = LangueSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
 class CompetenceViewSet(viewsets.ModelViewSet):
     queryset = Competence.objects.all()
     serializer_class = CompetenceSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
 class TalentCompetenceViewSet(viewsets.ModelViewSet):
     queryset = TalentCompetence.objects.all()
     serializer_class = TalentCompetenceSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
 class TypeExperienceViewSet(viewsets.ModelViewSet):
     queryset = TypeExperience.objects.all()
     serializer_class = TypeExperienceSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
 class ExperienceViewSet(viewsets.ModelViewSet):
     queryset = Experience.objects.all()
     serializer_class = ExperienceSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
 class TalentAttributViewSet(viewsets.ModelViewSet):
     queryset = TalentAttribut.objects.all()
     serializer_class = TalentAttributSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
 class MediaViewSet(viewsets.ModelViewSet):
     queryset = Media.objects.all()
     serializer_class = MediaSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]

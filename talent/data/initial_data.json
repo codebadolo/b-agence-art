@@ -1,0 +1,317 @@
+{
+  "agents": [
+    {
+      "nom": "Coudert",
+      "prenom": "Laurence",
+      "email": "laurence.coudert@arcenciel.com",
+      "telephone": "+33 1 23 45 67 89",
+      "adresse": "10 Rue des Artistes, 75009 Paris",
+      "agence": "Agence Arc en Ciel",
+      "site_web": "https://www.arcenciel.com"
+
+    },
+    {
+      "nom": "Gonon-Mathieu",
+      "prenom": "Gaspard",
+      "email": "gaspard.gonon@arcenciel.com",
+      "telephone": "+33 1 98 76 54 32",
+      "adresse": "25 Avenue du Spectacle, 69002 Lyon",
+      "agence": "Agence Arc en Ciel",
+      "site_web": "https://www.arcenciel.com"
+     
+    },
+    {
+      "nom": "Dubois",
+      "prenom": "Sophie",
+      "email": "sophie.dubois@arcenciel.com",
+      "telephone": "+33 6 11 22 33 44",
+      "adresse": "5 Rue de la Création, 13007 Marseille",
+      "agence": "Agence Arc en Ciel",
+      "site_web": "https://www.arcenciel.com"
+ 
+    },
+    {
+      "nom": "Lemaire",
+      "prenom": "Antoine",
+      "email": "antoine.lemaire@arcenciel.com",
+      "telephone": "+33 7 00 11 22 33",
+      "adresse": "8 Place du Cinéma, 31000 Toulouse",
+      "agence": "Agence Arc en Ciel",
+      "site_web": "https://www.arcenciel.com"
+    }
+  ],
+
+  "categories_talents": [
+    {"nom": "Comédien"},
+    {"nom": "Réalisateur"},
+    {"nom": "Chanteur"},
+    {"nom": "Danseur"},
+    {"nom": "Mannequin"},
+    {"nom": "Voix Off"}
+  ],
+
+  "localisations": [
+    {"nom": "Paris"},
+    {"nom": "Lyon"},
+    {"nom": "Marseille"},
+    {"nom": "Toulouse"},
+    {"nom": "Bordeaux"},
+    {"nom": "Bruxelles"}
+  ],
+
+  "langues": [
+    {"nom": "Français", "niveau": "Natif"},
+    {"nom": "Anglais", "niveau": "Bilingue"},
+    {"nom": "Espagnol", "niveau": "Courant"},
+    {"nom": "Italien", "niveau": "Notions"}
+  ],
+
+  "competences": [
+    {"nom": "Théâtre classique", "categorie": "Art Dramatique"},
+    {"nom": "Théâtre contemporain", "categorie": "Art Dramatique"},
+    {"nom": "Chant lyrique", "categorie": "Musique"},
+    {"nom": "Chant variété", "categorie": "Musique"},
+    {"nom": "Danse classique", "categorie": "Danse"},
+    {"nom": "Danse contemporaine", "categorie": "Danse"},
+    {"nom": "Équitation", "categorie": "Sport"},
+    {"nom": "Combat scénique", "categorie": "Action"},
+    {"nom": "Piano", "categorie": "Musique"}
+  ],
+
+  "type_experiences": [
+    {"nom": "Film"},
+    {"nom": "Série TV"},
+    {"nom": "Théâtre"},
+    {"nom": "Publicité"},
+    {"nom": "Court-métrage"},
+    {"nom": "Comédie Musicale"},
+    {"nom": "Clip Musical"},
+    {"nom": "Doublage"},
+    {"nom": "Défilé de Mode"},
+    {"nom": "Narration"}
+  ],
+
+  "talents": [
+    {
+      "nom": "Durand",
+      "prenom": "Léa",
+      "sexe": "femme",
+      "date_naissance": "1992-03-10",
+      "description": "Comédienne de formation classique, spécialisée dans les rôles dramatiques et les personnages complexes. Dotée d'une forte présence scénique et d'une voix puissante.",
+      "taille": "1m72",
+      "poids": "60kg",
+      "permis": "B",
+      "photo_principale": "/media/talents/photos/lea_durand.jpg",
+      "agent_email": "laurence.coudert@arcenciel.com",
+      "categories": ["Comédien", "Voix Off"],
+      "localisations": ["Paris", "Bruxelles"],
+      "langues": ["Français", "Anglais"],
+      "competences": ["Théâtre classique", "Voix Off", "Combat scénique"],
+      "experiences": [
+        {
+          "annee": "2024",
+          "titre": "L'Ombre du Passé",
+          "role": "Commissaire Delmas (rôle principal)",
+          "type_experience": "Série TV",
+          "description": "Série policière diffusée sur France 2. A acquis une grande notoriété pour ce rôle intense."
+        },
+        {
+          "annee": "2023",
+          "titre": "Hedda Gabler",
+          "role": "Hedda Gabler",
+          "type_experience": "Théâtre",
+          "description": "Adaptation moderne de la pièce d'Ibsen, mise en scène au Théâtre du Rond-Point. Nominée aux Molières."
+        },
+        {
+          "annee": "2021",
+          "titre": "La Voix de la Liberté",
+          "role": "Narratrice (Voix Off)",
+          "type_experience": "Documentaire",
+          "description": "Voix off du documentaire primé sur l'histoire des mouvements sociaux."
+        },
+        {
+          "annee": "2019",
+          "titre": "Spot Publicitaire 'Évasion'",
+          "role": "Actrice principale",
+          "type_experience": "Publicité",
+          "description": "Campagne nationale pour une marque de tourisme, diffusée à la télévision et en ligne."
+        }
+      ],
+      "attributs": [
+        {"cle": "Couleur de cheveux", "valeur": "Châtain foncé"},
+        {"cle": "Couleur des yeux", "valeur": "Verts"},
+        {"cle": "Voix", "valeur": "Grave, modulable"}
+      ]
+    },
+    {
+      "nom": "Lefebvre",
+      "prenom": "Maxime",
+      "sexe": "homme",
+      "date_naissance": "1988-07-22",
+      "description": "Acteur et danseur, passionné par les performances physiques et les comédies musicales. Polyvalent et très énergique.",
+      "taille": "1m80",
+      "poids": "75kg",
+      "permis": "B",
+      "photo_principale": "/media/talents/photos/maxime_lefebvre.jpg",
+      "agent_email": "gaspard.gonon@arcenciel.com",
+      "categories": ["Comédien", "Danseur", "Chanteur"],
+      "localisations": ["Lyon", "Paris"],
+      "langues": ["Français", "Italien"],
+      "competences": ["Danse contemporaine", "Chant variété", "Théâtre contemporain", "Piano"],
+      "experiences": [
+        {
+          "annee": "2023-2024",
+          "titre": "Les Misérables (Tournée)",
+          "role": "Ensemble / Doublure Jean Valjean",
+          "type_experience": "Comédie Musicale",
+          "description": "Participation à la tournée nationale et internationale de la célèbre comédie musicale."
+        },
+        {
+          "annee": "2022",
+          "titre": "Rythmes Urbains",
+          "role": "Danseur principal",
+          "type_experience": "Clip Musical",
+          "description": "Chorégraphie et interprétation du clip pour l'artiste 'Flow'."
+        },
+        {
+          "annee": "2021",
+          "titre": "Le Cercle des Poètes Disparus",
+          "role": "Neil Perry",
+          "type_experience": "Théâtre",
+          "description": "Mise en scène immersive au Théâtre de la Croix-Rousse."
+        }
+      ],
+      "attributs": [
+        {"cle": "Couleur de cheveux", "valeur": "Brun"},
+        {"cle": "Couleur des yeux", "valeur": "Marrons"},
+        {"cle": "Compétences particulières", "valeur": "Accro-yoga, manipulation d'objets"}
+      ]
+    },
+    {
+      "nom": "Petit",
+      "prenom": "Chloé",
+      "sexe": "femme",
+      "date_naissance": "1998-09-05",
+      "description": "Jeune comédienne prometteuse avec une forte présence à l'écran, spécialisée dans les rôles adolescents et jeunes adultes.",
+      "taille": "1m65",
+      "poids": "52kg",
+      "permis": "B",
+      "photo_principale": "/media/talents/photos/chloe_petit.jpg",
+      "agent_email": "sophie.dubois@arcenciel.com",
+      "categories": ["Comédien"],
+      "localisations": ["Marseille", "Bordeaux"],
+      "langues": ["Français", "Anglais"],
+      "competences": ["Théâtre contemporain", "Improvisation"],
+      "experiences": [
+        {
+          "annee": "2023",
+          "titre": "Le Secret des Vignes",
+          "role": "Julie (rôle secondaire)",
+          "type_experience": "Film",
+          "description": "Comédie dramatique tournée dans la région de Bordeaux. Première expérience significative au cinéma."
+        },
+        {
+          "annee": "2022",
+          "titre": "Cœurs Connectés",
+          "role": "Léa (rôle récurrent)",
+          "type_experience": "Série TV",
+          "description": "Série diffusée sur une plateforme de streaming pour adolescents. A permis de développer sa visibilité."
+        }
+      ],
+      "attributs": [
+        {"cle": "Couleur de cheveux", "valeur": "Blond vénitien"},
+        {"cle": "Couleur des yeux", "valeur": "Bleus"},
+        {"cle": "Savoir-faire", "valeur": "Pâtisserie"}
+      ]
+    },
+    {
+      "nom": "Bernard",
+      "prenom": "Arthur",
+      "sexe": "homme",
+      "date_naissance": "1985-01-18",
+      "description": "Acteur et réalisateur avec une vision artistique marquée, spécialisé dans les films indépendants et les sujets sociaux. Très engagé dans ses projets.",
+      "taille": "1m78",
+      "poids": "70kg",
+      "permis": "B",
+      "photo_principale": "/media/talents/photos/arthur_bernard.jpg",
+      "agent_email": "antoine.lemaire@arcenciel.com",
+      "categories": ["Comédien", "Réalisateur"],
+      "localisations": ["Toulouse", "Paris"],
+      "langues": ["Français", "Espagnol"],
+      "competences": ["Réalisation", "Théâtre contemporain", "Scénarisation"],
+      "experiences": [
+        {
+          "annee": "2024",
+          "titre": "Au Bord du Monde",
+          "role": "Réalisateur / Acteur (rôle principal)",
+          "type_experience": "Film",
+          "description": "Long-métrage indépendant primé dans plusieurs festivals. Aborde le thème de l'exclusion sociale."
+        },
+        {
+          "annee": "2021",
+          "titre": "Le Mur",
+          "role": "Thomas (rôle principal)",
+          "type_experience": "Court-métrage",
+          "description": "Court-métrage dramatique sélectionné au festival de Clermont-Ferrand."
+        },
+        {
+          "annee": "2018",
+          "titre": "Fragments de Vies",
+          "role": "Réalisateur",
+          "type_experience": "Documentaire",
+          "description": "Série de courts documentaires sur des parcours de vie atypiques."
+        }
+      ],
+      "attributs": [
+        {"cle": "Couleur de cheveux", "valeur": "Châtain clair"},
+        {"cle": "Couleur des yeux", "valeur": "Bleu clair"},
+        {"cle": "Style", "valeur": "Look bohème-chic"}
+      ]
+    },
+    {
+      "nom": "Roux",
+      "prenom": "Emma",
+      "sexe": "femme",
+      "date_naissance": "1995-02-28",
+      "description": "Mannequin polyvalente et actrice, capable d'incarner une large gamme d'émotions et de styles.",
+      "taille": "1m75",
+      "poids": "55kg",
+      "permis": "B",
+      "photo_principale": "/media/talents/photos/emma_roux.jpg",
+      "agent_email": "laurence.coudert@arcenciel.com",
+      "categories": ["Mannequin", "Comédien"],
+      "localisations": ["Paris"],
+      "langues": ["Français", "Anglais", "Espagnol"],
+      "competences": ["Mannequinat Fashion", "Mannequinat Commercial", "Théâtre contemporain"],
+      "experiences": [
+        {
+          "annee": "2024",
+          "titre": "Fashion Week Paris",
+          "role": "Mannequin (défilés multiples)",
+          "type_experience": "Défilé de Mode",
+          "description": "Participation à plusieurs défilés pour des designers renommés."
+        },
+        {
+          "annee": "2023",
+          "titre": "Campagne 'Lumière'",
+          "role": "Mannequin principale",
+          "type_experience": "Publicité",
+          "description": "Campagne publicitaire internationale pour une marque de cosmétiques."
+        },
+        {
+          "annee": "2022",
+          "titre": "Le Dernier Souffle",
+          "role": "Alice (rôle secondaire)",
+          "type_experience": "Film",
+          "description": "Drame psychologique indépendant. Première expérience notable au cinéma."
+        }
+      ],
+      "attributs": [
+        {"cle": "Couleur de cheveux", "valeur": "Roux naturel"},
+        {"cle": "Couleur des yeux", "valeur": "Bleus"},
+        {"cle": "Particularités", "valeur": "Tâches de rousseur"}
+      ]
+    }
+
+  ]
+}
